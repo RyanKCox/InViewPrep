@@ -25,7 +25,7 @@ class CounterController:Controller() {
         savedViewState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.controller_counter,container,false)
-        viewModel = ViewModelProvider(container.context as MainActivity).get(CounterVM::class.java)
+        viewModel = ViewModelProvider(container.context as MainActivity)[CounterVM::class.java]
 
         counterButton = view.findViewById(R.id.counter_button_count)
         counterText = view.findViewById(R.id.counter_textView_count)
