@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
-import com.revature.inviewprep.home.controller.HomeController
+import com.revature.inviewprep.view.home.controller.HomeController
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,6 +1,5 @@
-package com.revature.inviewprep.counter
+package com.revature.inviewprep.view.counter
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

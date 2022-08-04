@@ -1,4 +1,4 @@
-package com.revature.inviewprep.home.view
+package com.revature.inviewprep.view.home.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.revature.inviewprep.R
-import com.revature.inviewprep.navigation.NavScreens
+import com.revature.inviewprep.view.navigation.NavScreens
 
 class RecyclerAdapter(private val dataSet:List<NavScreens<out Controller>>, private val router:Router) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>()

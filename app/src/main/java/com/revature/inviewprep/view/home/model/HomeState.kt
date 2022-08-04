@@ -1,4 +1,4 @@
-package com.revature.inviewprep.home.model
+package com.revature.inviewprep.view.home.model
 
 import androidx.constraintlayout.motion.utils.ViewState
 

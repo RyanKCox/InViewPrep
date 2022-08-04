@@ -1,4 +1,4 @@
-package com.revature.inviewprep.counter
+package com.revature.inviewprep.view.counter
 
 sealed class CounterIntent {
     object IncreaseCount:CounterIntent()
