@@ -1,28 +1,41 @@
 package com.revature.inviewprep.view.mosby.mosby_hello
 
-import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter
+import com.hannesdorfmann.mosby3.mvi.MviBasePresenter
 import com.revature.inviewprep.domain.GetGreetingUseCase
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class GreetingsPresenter :
-    MvpBasePresenter<GreetingsContract.View>(), GreetingsContract.Presenter{
+    MviBasePresenter<GreetingsContract.View, GreetingsViewState>(){
 
-    private val disposable:CompositeDisposable = CompositeDisposable()
 
-    override fun loadGreeting() {
-        disposable.add(GetGreetingUseCase.getHelloGreeting()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe{ ifViewAttached { view->view.showLoading() }}
-            .doFinally{ ifViewAttached { view->view.hideLoading() }}
-            .subscribe({ifViewAttached { view->view.showGreeting(it) }},{ifViewAttached { view->view.showError() }}))
+    override fun bindIntents() {
+
+        val start = Observable.just(GreetingsViewState.StartDisplay as GreetingsViewState)
+
+        val buttonClickObs: Observable<GreetingsViewState> =
+            intent { it.displayIntent() }
+                .switchMap { greeting->
+
+//                    val test = GetGreetingUseCase.getHelloGreeting()
+                    Observable.just(GreetingsViewState.Display(greeting) as GreetingsViewState)
+                        .delay(2,TimeUnit.SECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .startWith(GreetingsViewState.Loading)
+                        .subscribeOn(AndroidSchedulers.mainThread())}
+
+        val viewState = start.mergeWith(buttonClickObs)
+
+        subscribeViewState(viewState){view,state -> view.render(state)}
+
     }
 
-    override fun destroy() {
-        super.destroy()
-        disposable.clear()
-    }
-
+}
+sealed class GreetingsViewState{
+    object Loading:GreetingsViewState()
+    object StartDisplay:GreetingsViewState()
+    data class Display(
+        val greeting:String
+        ):GreetingsViewState()
 }

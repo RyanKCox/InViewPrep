@@ -33,6 +33,10 @@ android {
 
 dependencies {
     def mosbyVersion = "3.1.0"
+//    def rxJava = "3.1.5"
+//    def rxKotlin = "2.2.0"
+//    def rxAndroid = "3.0.0"
+    def rxBinding = "2.1.1"
 
 
     implementation 'androidx.core:core-ktx:1.8.0'
@@ -55,8 +59,18 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
 
     //Mosby
-    implementation "com.hannesdorfmann.mosby3:mvp:$mosbyVersion"
-    implementation "com.hannesdorfmann.mosby3:mvp-conductor:$mosbyVersion"
+    implementation "com.hannesdorfmann.mosby3:mvi-common:$mosbyVersion"
+    implementation "com.hannesdorfmann.mosby3:mvi-conductor:$mosbyVersion"
+
+    //RxBinding
+//    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+//    implementation "io.reactivex.rxjava3.rxjava:$rxJava"
+//    implementation "io.reactivex.rxjava3.rxkotlin:$rxKotlin"
+//    implementation "io.reactivex.rxjava3.rxandroid:$rxAndroid"
+    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxBinding"
+    implementation "com.jakewharton.rxbinding2:rxbinding-design-kotlin:$rxBinding"
+    implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$rxBinding"
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxBinding"
 
 
 }

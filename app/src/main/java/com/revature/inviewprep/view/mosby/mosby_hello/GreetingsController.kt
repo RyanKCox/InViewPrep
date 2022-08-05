@@ -4,22 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
-import com.bluelinelabs.conductor.Controller
-import com.hannesdorfmann.mosby3.mvp.conductor.MvpController
+import com.hannesdorfmann.mosby3.MviController
+import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding2.view.visibility
 import com.revature.inviewprep.R
+import io.reactivex.Observable
 
 class GreetingsController :
-    MvpController<GreetingsContract.View,GreetingsContract.Presenter>(),
+    MviController<GreetingsContract.View, GreetingsPresenter>(),
         GreetingsContract.View
 {
 
     lateinit var greetingsTV:TextView
     lateinit var loadingIndicator:ProgressBar
-    lateinit var greetingButton:Button
+    lateinit var greetingButton:View
 
 
     override fun onCreateView(
@@ -32,39 +32,32 @@ class GreetingsController :
         loadingIndicator = view.findViewById(R.id.loading_indicator)
         greetingButton =view.findViewById(R.id.hello_greeting_button)
 
-        greetingButton.setOnClickListener {
-            onGreetingButtonClicked()
-        }
-
         return view
     }
 
-    override fun createPresenter(): GreetingsContract.Presenter = GreetingsPresenter()
+    override fun createPresenter(): GreetingsPresenter = GreetingsPresenter()
 
-    override fun onGreetingButtonClicked() {
-        presenter.loadGreeting()
+
+    override fun displayIntent():Observable<String>{
+        return greetingButton.clicks()
+            .map { click -> "HelloWorld" }
     }
 
-    override fun showLoading() {
-        greetingsTV.visibility = View.GONE
-        loadingIndicator.visibility = View.VISIBLE
+    override fun render(state: GreetingsViewState) {
+        when(state){
+            is GreetingsViewState.Display ->{
+                loadingIndicator.visibility = View.GONE
+                greetingsTV.text = state.greeting
+                greetingsTV.visibility = View.VISIBLE
+            }
+            is GreetingsViewState.Loading -> {
+                loadingIndicator.visibility = View.VISIBLE
+                greetingsTV.visibility = View.GONE
+            }
+            is GreetingsViewState.StartDisplay -> {
+                loadingIndicator.visibility = View.GONE
+                greetingsTV.visibility = View.GONE
+            }
+        }
     }
-
-    override fun hideLoading() {
-        loadingIndicator.visibility = View.GONE
-    }
-
-    override fun showGreeting(greetingText: String) {
-        greetingsTV.visibility = View.VISIBLE
-        greetingsTV.text = greetingText
-    }
-
-    override fun showError() {
-        Toast.makeText(
-            applicationContext,
-            applicationContext?.getString(R.string.greeting_loading_error),
-            Toast.LENGTH_LONG).show()
-    }
-
-
 }
