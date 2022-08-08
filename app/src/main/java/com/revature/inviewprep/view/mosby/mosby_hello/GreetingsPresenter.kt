@@ -17,13 +17,12 @@ class GreetingsPresenter :
         val buttonClickObs: Observable<GreetingsViewState> =
             intent { it.displayIntent() }
                 .switchMap { greeting->
-
-//                    val test = GetGreetingUseCase.getHelloGreeting()
                     Observable.just(GreetingsViewState.Display(greeting) as GreetingsViewState)
                         .delay(2,TimeUnit.SECONDS)
                         .observeOn(AndroidSchedulers.mainThread())
                         .startWith(GreetingsViewState.Loading)
-                        .subscribeOn(AndroidSchedulers.mainThread())}
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                }
 
         val viewState = start.mergeWith(buttonClickObs)
 
