@@ -17,27 +17,27 @@ class HomePresenter(private val router: Router):MviBasePresenter<HomeView,HomeSt
 
     override fun bindIntents() {
 
-        val menuItemClicked = intent { it.menuItemIntent() }
-            .switchMap {
-                Log.d("Home","menuItem switchMap")
-                Observable.just(it)
-            }
-            .doOnNext{
-                Log.d("Home","menuItem doOnNext")
-                router.pushController(
-                    RouterTransaction.with(it.controller.newInstance())
-                        .pushChangeHandler(FadeChangeHandler())
-                        .popChangeHandler(FadeChangeHandler()))
-            }
-            .ofType(HomeState::class.java)
+//        val menuItemClicked = intent { it.menuItemIntent() }
+////            .switchMap {
+////                Log.d("Home","menuItem switchMap")
+////                Observable.just(it)
+////            }
+//            .doOnNext{
+//                Log.d("Home","menuItem doOnNext")
+//                router.pushController(
+//                    RouterTransaction.with(it.controller.newInstance())
+//                        .pushChangeHandler(FadeChangeHandler())
+//                        .popChangeHandler(FadeChangeHandler()))
+//            }
+//            .ofType(HomeState::class.java)
 
         val data = Observable.just(NavScreens.allScreens.drop(1))
             .map { list->
-                HomeState.DisplayScreens(list.map { NavItem(it) })
+                HomeState.DisplayScreens(list)
             }
             .ofType(HomeState::class.java)
 
-        val viewState = data.mergeWith(menuItemClicked)
+        val viewState = data
 
         subscribeViewState(viewState){ view,state->view.render(state) }
     }
