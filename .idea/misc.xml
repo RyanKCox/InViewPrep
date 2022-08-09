@@ -10,7 +10,13 @@
         <entry key="..\:/Users/RyanK/AndroidStudioProjects/InViewPrep/app/src/main/res/layout/controller_counter.xml" value="0.1852355072463768" />
         <entry key="..\:/Users/RyanK/AndroidStudioProjects/InViewPrep/app/src/main/res/layout/controller_greeting.xml" value="0.25" />
         <entry key="..\:/Users/RyanK/AndroidStudioProjects/InViewPrep/app/src/main/res/layout/controller_home.xml" value="0.1" />
+        <entry key="..\:/Users/RyanK/AndroidStudioProjects/InViewPrep/app/src/main/res/layout/controller_messanger_receive.xml" value="0.23007246376811594" />
+        <entry key="..\:/Users/RyanK/AndroidStudioProjects/InViewPrep/app/src/main/res/layout/controller_messanger_send.xml" value="0.2" />
+        <entry key="..\:/Users/RyanK/AndroidStudioProjects/InViewPrep/app/src/main/res/layout/controller_messenger_receive.xml" value="0.25" />
+        <entry key="..\:/Users/RyanK/AndroidStudioProjects/InViewPrep/app/src/main/res/layout/controller_messenger_send.xml" value="0.25" />
         <entry key="..\:/Users/RyanK/AndroidStudioProjects/InViewPrep/app/src/main/res/layout/controller_mosby_hello.xml" value="0.14719202898550723" />
+        <entry key="..\:/Users/RyanK/AndroidStudioProjects/InViewPrep/app/src/main/res/layout/messenger_received_item.xml" value="0.23007246376811594" />
+        <entry key="..\:/Users/RyanK/AndroidStudioProjects/InViewPrep/app/src/main/res/layout/messenger_sent_item.xml" value="0.23007246376811594" />
       </map>
     </option>
   </component>

@@ -5,4 +5,7 @@
     <string name="reset">Reset</string>
     <string name="show_greeting">Show Greeting</string>
     <string name="greeting_loading_error">Failed to load Greeting!</string>
+    <string name="your_message_here">Your Message Here!</string>
+    <string name="send_message_image">Send Message Image</string>
+    <string name="profile_image">Profile Image</string>
 </resources>
