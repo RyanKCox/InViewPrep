@@ -7,18 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bluelinelabs.conductor.Controller
 import com.hannesdorfmann.mosby3.MviController
 import com.revature.inviewprep.R
 import com.revature.inviewprep.view.home.model.HomeState
 import com.revature.inviewprep.view.home.model.HomeView
 import com.revature.inviewprep.view.home.model.NavItem
 import com.revature.inviewprep.view.home.view.HomePresenter
-import com.revature.inviewprep.view.navigation.NavScreens
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
 
 
 class HomeController: MviController<HomeView,HomePresenter>(),HomeView{
@@ -27,13 +23,14 @@ class HomeController: MviController<HomeView,HomePresenter>(),HomeView{
 //    private val menuListSubject:PublishSubject<NavScreens<out Controller>>
 //        = PublishSubject.create()
 
-//    init {
-//        Log.d("Home","Init Hit")
+    init {
+        Log.d("Home","Init Hit")
 //        adapter.setOnItemClickListener { item, _ ->
+//
 //            Log.d("Home", "adapter click listener created")
 //            menuListSubject.onNext((item as NavItem).nav)
 //        }
-//    }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,7 +52,7 @@ class HomeController: MviController<HomeView,HomePresenter>(),HomeView{
 
     }
 
-    override fun createPresenter() = HomePresenter(router)
+    override fun createPresenter() = HomePresenter(/*router*/)
 
 //    override fun menuItemIntent(): Observable<NavScreens<out Controller>> {
 //        Log.d("Home","menuItemIntent - Override Hit")

@@ -8,7 +8,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.hannesdorfmann.mosby3.MviController
 import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.view.visibility
 import com.revature.inviewprep.R
 import io.reactivex.Observable
 
@@ -40,7 +39,7 @@ class GreetingsController :
 
     override fun displayIntent():Observable<String>{
         return greetingButton.clicks()
-            .map { click -> "HelloWorld" }
+            .map { "HelloWorld" }
     }
 
     override fun render(state: GreetingsViewState) {

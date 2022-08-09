@@ -1,18 +1,12 @@
 package com.revature.inviewprep.view.home.view
 
-import android.util.Log
-import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.hannesdorfmann.mosby3.mvi.MviBasePresenter
 import com.revature.inviewprep.view.home.model.HomeState
 import com.revature.inviewprep.view.home.model.HomeView
-import com.revature.inviewprep.view.home.model.NavItem
 import com.revature.inviewprep.view.navigation.NavScreens
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 
-class HomePresenter(private val router: Router):MviBasePresenter<HomeView,HomeState>(){
+class HomePresenter(/*private val router: Router*/):MviBasePresenter<HomeView,HomeState>(){
 
 
     override fun bindIntents() {
@@ -37,7 +31,7 @@ class HomePresenter(private val router: Router):MviBasePresenter<HomeView,HomeSt
             }
             .ofType(HomeState::class.java)
 
-        val viewState = data
+        val viewState = data/*.mergeWith(menuItemClicked)*/
 
         subscribeViewState(viewState){ view,state->view.render(state) }
     }
