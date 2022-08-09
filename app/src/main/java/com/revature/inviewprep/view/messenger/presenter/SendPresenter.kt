@@ -5,10 +5,11 @@ import com.revature.inviewprep.view.messenger.controller.MessengerView
 import com.revature.inviewprep.view.messenger.data.Message
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 
 class SendPresenter : MviBasePresenter<MessengerView,MessengerViewState>() {
-    val chat = mutableListOf<Message>()
+    private val chat = mutableListOf<Message>()
     override fun bindIntents() {
 
         val sendIntent = intent { it.sendMessageIntent() }
@@ -24,6 +25,10 @@ class SendPresenter : MviBasePresenter<MessengerView,MessengerViewState>() {
 
         val data = Observable
             .just(MessengerViewState.DisplayMessages(chat))
+            .delay(2,TimeUnit.SECONDS)
+            .doOnSubscribe{
+                MessengerViewState.Loading
+            }
             .ofType(MessengerViewState::class.java)
 
         val viewState = data.mergeWith(sendIntent)

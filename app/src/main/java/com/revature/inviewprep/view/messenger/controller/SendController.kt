@@ -22,6 +22,7 @@ import com.revature.inviewprep.view.messenger.presenter.MessengerViewState
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import io.reactivex.Observable
+import java.util.*
 
 class SendController : MviController<MessengerView,SendPresenter>(),MessengerView {
 
@@ -55,7 +56,7 @@ class SendController : MviController<MessengerView,SendPresenter>(),MessengerVie
     override fun createPresenter() = SendPresenter()
     override fun sendMessageIntent(): Observable<Message> = sendButton.clicks().map {
 
-        val message = Message(0, "10", sendMessage.text.toString())
+        val message = Message(0, Calendar.getInstance().timeInMillis, sendMessage.text.toString())
         sendMessage.text.clear()
         message
     }
@@ -65,23 +66,36 @@ class SendController : MviController<MessengerView,SendPresenter>(),MessengerVie
             is MessengerViewState.DisplayMessages->{
                 adapter.clear()
                 adapter.addAll(viewState.messageList.map { MessengerItem(it) })
-                recycler.visibility = View.VISIBLE
-                progressBar.visibility = View.GONE
-                sendMessage.hint = "Your Message Here!"
-                sendMessage.setHintTextColor(Color.GRAY)
-
+                renderDisplayScreen()
             }
             is MessengerViewState.MessageEmpty->{
-                sendMessage.hint = "Message Empty!"
-                sendMessage.setHintTextColor(Color.RED)
+                renderEmptyMessage()
             }
             is MessengerViewState.Loading->{
-                recycler.visibility = View.GONE
-                progressBar.visibility = View.VISIBLE
-
+                renderLoading()
 
             }
         }
+    }
+    private fun renderDisplayScreen(){
+        recycler.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
+        sendMessage.visibility = View.VISIBLE
+        sendButton.visibility = View.VISIBLE
+        sendMessage.hint = "Your Message Here!"
+        sendMessage.setHintTextColor(Color.GRAY)
+
+    }
+    private fun renderLoading(){
+        recycler.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+        sendMessage.visibility = View.GONE
+        sendButton.visibility = View.GONE
+    }
+    private fun renderEmptyMessage(){
+        sendMessage.hint = "Message Empty!"
+        sendMessage.setHintTextColor(Color.RED)
+
     }
 
 }
