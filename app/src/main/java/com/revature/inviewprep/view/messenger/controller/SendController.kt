@@ -16,7 +16,8 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.revature.inviewprep.R
 import com.revature.inviewprep.databinding.ControllerMessengerSendBinding
 import com.revature.inviewprep.view.messenger.data.Message
-import com.revature.inviewprep.view.messenger.data.MessengerItem
+import com.revature.inviewprep.view.messenger.data.MessengerSendItem
+import com.revature.inviewprep.view.messenger.data.User
 import com.revature.inviewprep.view.messenger.presenter.SendPresenter
 import com.revature.inviewprep.view.messenger.presenter.MessengerViewState
 import com.xwray.groupie.GroupAdapter
@@ -25,6 +26,8 @@ import io.reactivex.Observable
 import java.util.*
 
 class SendController : MviController<MessengerView,SendPresenter>(),MessengerView {
+
+    private val user = User("Ryan")
 
     private val adapter: GroupAdapter<GroupieViewHolder> = GroupAdapter()
     private lateinit var recycler:RecyclerView
@@ -56,7 +59,7 @@ class SendController : MviController<MessengerView,SendPresenter>(),MessengerVie
     override fun createPresenter() = SendPresenter()
     override fun sendMessageIntent(): Observable<Message> = sendButton.clicks().map {
 
-        val message = Message(0, Calendar.getInstance().timeInMillis, sendMessage.text.toString())
+        val message = Message(user, Calendar.getInstance().timeInMillis, sendMessage.text.toString())
         sendMessage.text.clear()
         message
     }
@@ -65,7 +68,7 @@ class SendController : MviController<MessengerView,SendPresenter>(),MessengerVie
         when (viewState){
             is MessengerViewState.DisplayMessages->{
                 adapter.clear()
-                adapter.addAll(viewState.messageList.map { MessengerItem(it) })
+                adapter.addAll(viewState.messageList.map { MessengerSendItem(it) })
                 renderDisplayScreen()
             }
             is MessengerViewState.MessageEmpty->{

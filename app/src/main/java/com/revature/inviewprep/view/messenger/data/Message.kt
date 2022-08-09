@@ -5,7 +5,7 @@ import java.util.*
 
 
 data class Message(
-    val userId:Int,
+    val user:User,
     val time:Long,
     val message:String
 ){
@@ -18,7 +18,6 @@ data class Message(
     }
 }
 data class User(
-    val id:Int,
     val name:String,
-    val image:String
+    val imageId:Int = android.R.drawable.ic_menu_myplaces
 )
