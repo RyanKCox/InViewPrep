@@ -1,7 +1,6 @@
-package com.revature.inviewprep.view.home.model
+package com.revature.inviewprep.view.messenger.data
 
 import androidx.lifecycle.MutableLiveData
-import com.revature.inviewprep.view.messenger.data.Message
 
 object ChatRepository {
     private val chat = MutableLiveData<MutableList<Message>>(mutableListOf())

@@ -14,7 +14,7 @@ import com.hannesdorfmann.mosby3.MviController
 import com.jakewharton.rxbinding2.view.clicks
 import com.revature.inviewprep.R
 import com.revature.inviewprep.databinding.ControllerMessengerReceiveBinding
-import com.revature.inviewprep.view.home.model.ChatRepository
+import com.revature.inviewprep.view.messenger.data.ChatRepository
 import com.revature.inviewprep.view.messenger.data.Message
 import com.revature.inviewprep.view.messenger.data.MessengerReceiveItem
 import com.revature.inviewprep.view.messenger.data.MessengerSendItem
@@ -58,7 +58,7 @@ class ReceiveController :MviController<MessengerView,ReceivePresenter>(),Messeng
         recycler.adapter = adapter
     }
 
-    override fun createPresenter() = ReceivePresenter(router,ChatRepository)
+    override fun createPresenter() = ReceivePresenter(router, ChatRepository)
 
     override fun sendMessageIntent(): Observable<Message> = sendButton.clicks().map {
 

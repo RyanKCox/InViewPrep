@@ -20,10 +20,12 @@ sealed class HomeState: ViewState() {
     data class DisplayScreens(val data:List<NavScreens<out Controller>>):HomeState()
 
 }
+
 interface HomeView:MvpView{
 //    fun menuItemIntent(): Observable<NavScreens<out Controller>>
     fun render(viewState:HomeState)
 }
+
 class NavItem(private val nav:NavScreens<out Controller>, val router: Router): BindableItem<ButtonRowItemBinding>() {
     override fun bind(viewBinding: ButtonRowItemBinding, position: Int) {
         viewBinding.navButton.text = nav.name

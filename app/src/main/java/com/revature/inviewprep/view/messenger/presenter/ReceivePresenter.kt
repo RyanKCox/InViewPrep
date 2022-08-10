@@ -4,7 +4,7 @@ import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.FadeChangeHandler
 import com.hannesdorfmann.mosby3.mvi.MviBasePresenter
-import com.revature.inviewprep.view.home.model.ChatRepository
+import com.revature.inviewprep.view.messenger.data.ChatRepository
 import com.revature.inviewprep.view.messenger.controller.MessengerView
 import com.revature.inviewprep.view.messenger.controller.SendController
 import io.reactivex.Observable
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 
 class ReceivePresenter(
     private val router:Router,
-    private val chatRepository:ChatRepository
+    private val chatRepository: ChatRepository
     ) :MviBasePresenter<MessengerView,MessengerViewState>(){
 
     private val chat = chatRepository.getChat()

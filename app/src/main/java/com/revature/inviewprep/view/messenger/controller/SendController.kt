@@ -15,7 +15,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpView
 import com.jakewharton.rxbinding2.view.clicks
 import com.revature.inviewprep.R
 import com.revature.inviewprep.databinding.ControllerMessengerSendBinding
-import com.revature.inviewprep.view.home.model.ChatRepository
+import com.revature.inviewprep.view.messenger.data.ChatRepository
 import com.revature.inviewprep.view.messenger.data.Message
 import com.revature.inviewprep.view.messenger.data.MessengerReceiveItem
 import com.revature.inviewprep.view.messenger.data.MessengerSendItem
@@ -58,7 +58,7 @@ class SendController : MviController<MessengerView,SendPresenter>(),MessengerVie
 
     }
 
-    override fun createPresenter() = SendPresenter(router,ChatRepository)
+    override fun createPresenter() = SendPresenter(router, ChatRepository)
     override fun sendMessageIntent(): Observable<Message> = sendButton.clicks().map {
 
         val message = Message(user, Calendar.getInstance().timeInMillis, sendMessage.text.toString())
