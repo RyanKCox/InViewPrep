@@ -1,6 +1,6 @@
 # InViewPrep
 
-Trainign app attempting to utilize libraries from main for learning
+Trainign app using different libraries 
 
 ## Home Screen
 
