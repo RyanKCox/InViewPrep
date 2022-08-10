@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -37,6 +38,7 @@ android {
 dependencies {
     def mosbyVersion = "3.1.0"
     def rxBinding = "2.1.1"
+    def daggerVersion = "2.14.1"
 
 
     implementation 'androidx.core:core-ktx:1.8.0'
@@ -71,4 +73,8 @@ dependencies {
     //Groupie
     implementation "com.github.lisawray.groupie:groupie:2.10.1"
     implementation "com.github.lisawray.groupie:groupie-viewbinding:2.10.1"
+
+    //Dagger
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 }
