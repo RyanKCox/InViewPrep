@@ -14,8 +14,10 @@ import com.hannesdorfmann.mosby3.MviController
 import com.jakewharton.rxbinding2.view.clicks
 import com.revature.inviewprep.R
 import com.revature.inviewprep.databinding.ControllerMessengerReceiveBinding
+import com.revature.inviewprep.view.home.model.ChatRepository
 import com.revature.inviewprep.view.messenger.data.Message
 import com.revature.inviewprep.view.messenger.data.MessengerReceiveItem
+import com.revature.inviewprep.view.messenger.data.MessengerSendItem
 import com.revature.inviewprep.view.messenger.data.User
 import com.revature.inviewprep.view.messenger.presenter.MessengerViewState
 import com.revature.inviewprep.view.messenger.presenter.ReceivePresenter
@@ -56,7 +58,7 @@ class ReceiveController :MviController<MessengerView,ReceivePresenter>(),Messeng
         recycler.adapter = adapter
     }
 
-    override fun createPresenter() = ReceivePresenter()
+    override fun createPresenter() = ReceivePresenter(router,ChatRepository)
 
     override fun sendMessageIntent(): Observable<Message> = sendButton.clicks().map {
 
@@ -70,7 +72,12 @@ class ReceiveController :MviController<MessengerView,ReceivePresenter>(),Messeng
         when(viewState){
             is MessengerViewState.DisplayMessages->{
                 adapter.clear()
-                adapter.addAll(viewState.messageList.map { MessengerReceiveItem(it) })
+                adapter.addAll(viewState.messageList.map {
+                    if(it.user == user)
+                        MessengerSendItem(it)
+                    else
+                        MessengerReceiveItem(it)
+                })
                 renderDisplay()
             }
             is MessengerViewState.Loading->{
@@ -81,25 +88,28 @@ class ReceiveController :MviController<MessengerView,ReceivePresenter>(),Messeng
             }
         }
     }
-    fun renderLoading(){
+    private fun renderLoading(){
         recycler.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
         sendMessage.visibility = View.GONE
         sendButton.visibility = View.GONE
 
     }
-    fun renderMessageEmpty(){
+    private fun renderMessageEmpty(){
         sendMessage.hint = "Message Empty!"
         sendMessage.setHintTextColor(Color.RED)
 
     }
-    fun renderDisplay(){
+    private fun renderDisplay(){
         recycler.visibility = View.VISIBLE
         progressBar.visibility = View.GONE
         sendMessage.visibility = View.VISIBLE
         sendButton.visibility = View.VISIBLE
         sendMessage.hint = "Your Message Here!"
         sendMessage.setHintTextColor(Color.GRAY)
+        recycler.layoutManager?.let {
+            it.scrollToPosition(it.itemCount-1)
+        }
 
     }
 
