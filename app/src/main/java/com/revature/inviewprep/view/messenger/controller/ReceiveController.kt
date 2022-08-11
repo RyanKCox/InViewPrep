@@ -49,7 +49,7 @@ class ReceiveController :MviController<MessengerView,ReceivePresenter>(),Messeng
         return view
     }
 
-    fun setup(view:View){
+    private fun setup(view:View){
         val bind = ControllerMessengerReceiveBinding.bind(view)
         sendButton = bind.imageReceive
         sendMessage = bind.textSendmessageReceive
