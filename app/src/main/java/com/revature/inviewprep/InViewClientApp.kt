@@ -6,6 +6,7 @@ import com.bluelinelabs.conductor.Controller
 import com.ivianuu.contributer.conductor.HasControllerInjector
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
+import timber.log.Timber
 import javax.inject.Inject
 
 class InViewClientApp :Application(),HasControllerInjector {
@@ -20,6 +21,7 @@ class InViewClientApp :Application(),HasControllerInjector {
 
     override fun onCreate() {
         super.onCreate()
+        Timber.plant(Timber.DebugTree())
 
     }
 
