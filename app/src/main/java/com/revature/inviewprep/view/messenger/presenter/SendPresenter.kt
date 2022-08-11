@@ -11,6 +11,7 @@ import com.revature.inviewprep.view.messenger.data.Message
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 class SendPresenter(
@@ -18,15 +19,14 @@ class SendPresenter(
     private val chatRepository: ChatRepository
     ) : MviBasePresenter<MessengerView,MessengerViewState>() {
 
-    private val chat = chatRepository.getChat()
 
     override fun bindIntents() {
 
         val sendIntent = intent { it.sendMessageIntent() }
             .switchMap {
                 if(it.message.isNotEmpty()) {
-                    ChatRepository.addMessage(it)
-                    Observable.just(MessengerViewState.DisplayMessages(chat.value?.toList()!!))
+                    chatRepository.addMessage(it)
+                    Observable.just(MessengerViewState.DisplayMessages(chatRepository.getChat().value?.toList()!!))
                 }
                 else
                     Observable.just(MessengerViewState.MessageEmpty)
@@ -38,18 +38,20 @@ class SendPresenter(
                         .popChangeHandler(FadeChangeHandler()))
                 router.popController(router.backstack[router.backstackSize-2].controller)
 
+
             }
             .ofType(MessengerViewState::class.java)
 
         val data = Observable
-            .just(MessengerViewState.DisplayMessages(chat.value?.toList()!!))
-            .delay(2,TimeUnit.SECONDS)
+            .just(MessengerViewState.DisplayMessages(chatRepository.getChat().value?.toList()!!))
+            .delay(1,TimeUnit.SECONDS)
             .doOnSubscribe{
                 MessengerViewState.Loading
             }
             .ofType(MessengerViewState::class.java)
 
-        val viewState = data.mergeWith(sendIntent)
+        val viewState = data
+            .mergeWith(sendIntent)
             .observeOn(AndroidSchedulers.mainThread())
 
         subscribeViewState(viewState){ view,state->view.render(state) }

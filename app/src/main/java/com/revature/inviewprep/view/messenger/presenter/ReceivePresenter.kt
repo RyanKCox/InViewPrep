@@ -10,21 +10,21 @@ import com.revature.inviewprep.view.messenger.controller.SendController
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class ReceivePresenter(
     private val router:Router,
     private val chatRepository: ChatRepository
     ) :MviBasePresenter<MessengerView,MessengerViewState>(){
 
-    private val chat = chatRepository.getChat()
 
     override fun bindIntents() {
 
         val sendClick = intent { it.sendMessageIntent() }
             .switchMap {
                 if(it.message.isNotEmpty()) {
-                    ChatRepository.addMessage(it)
-                    Observable.just(MessengerViewState.DisplayMessages(chat.value?.toList()!!))
+                    chatRepository.addMessage(it)
+                    Observable.just(MessengerViewState.DisplayMessages(chatRepository.getChat().value?.toList()!!))
                 }
                 else{
                     Observable.just(MessengerViewState.MessageEmpty)
@@ -41,8 +41,8 @@ class ReceivePresenter(
             .ofType(MessengerViewState::class.java)
 
         val data = Observable
-            .just(MessengerViewState.DisplayMessages(chat.value?.toList()!!))
-            .delay(2,TimeUnit.SECONDS)
+            .just(MessengerViewState.DisplayMessages(chatRepository.getChat().value?.toList()!!))
+            .delay(1,TimeUnit.SECONDS)
             .doOnSubscribe { MessengerViewState.Loading }
             .ofType(MessengerViewState::class.java)
 

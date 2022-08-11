@@ -27,7 +27,9 @@ import io.reactivex.Observable
 import java.util.*
 
 class ReceiveController :MviController<MessengerView,ReceivePresenter>(),MessengerView{
+
     private val user = User("James")
+
     private lateinit var sendButton:ImageButton
     private lateinit var sendMessage:EditText
     private lateinit var recycler:RecyclerView

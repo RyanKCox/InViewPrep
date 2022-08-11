@@ -10,16 +10,14 @@ import android.widget.ImageButton
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bluelinelabs.conductor.ControllerChangeHandler
+import com.bluelinelabs.conductor.ControllerChangeType
 import com.hannesdorfmann.mosby3.MviController
 import com.hannesdorfmann.mosby3.mvp.MvpView
 import com.jakewharton.rxbinding2.view.clicks
 import com.revature.inviewprep.R
 import com.revature.inviewprep.databinding.ControllerMessengerSendBinding
-import com.revature.inviewprep.view.messenger.data.ChatRepository
-import com.revature.inviewprep.view.messenger.data.Message
-import com.revature.inviewprep.view.messenger.data.MessengerReceiveItem
-import com.revature.inviewprep.view.messenger.data.MessengerSendItem
-import com.revature.inviewprep.view.messenger.data.User
+import com.revature.inviewprep.view.messenger.data.*
 import com.revature.inviewprep.view.messenger.presenter.SendPresenter
 import com.revature.inviewprep.view.messenger.presenter.MessengerViewState
 import com.xwray.groupie.GroupAdapter
@@ -42,6 +40,7 @@ class SendController : MviController<MessengerView,SendPresenter>(),MessengerVie
         container: ViewGroup,
         savedViewState: Bundle?
     ): View {
+
         val view = inflater.inflate(R.layout.controller_messenger_send,container,false)
 
         setup(view)
@@ -58,7 +57,8 @@ class SendController : MviController<MessengerView,SendPresenter>(),MessengerVie
 
     }
 
-    override fun createPresenter() = SendPresenter(router, ChatRepository)
+
+    override fun createPresenter() =  SendPresenter(router, ChatRepository)
     override fun sendMessageIntent(): Observable<Message> = sendButton.clicks().map {
 
         val message = Message(user, Calendar.getInstance().timeInMillis, sendMessage.text.toString())
