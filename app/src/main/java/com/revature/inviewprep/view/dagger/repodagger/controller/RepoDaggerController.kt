@@ -10,7 +10,6 @@ import com.hannesdorfmann.mosby3.MviController
 import com.hannesdorfmann.mosby3.mvp.MvpView
 import com.revature.inviewprep.R
 import com.revature.inviewprep.databinding.ControllerRepodaggerBinding
-import com.revature.inviewprep.view.dagger.repodagger.data.UserDataRepository
 import com.revature.inviewprep.view.dagger.repodagger.di.DaggerRepoDaggerComponent
 import com.revature.inviewprep.view.dagger.repodagger.di.RepoDaggerModule
 import com.revature.inviewprep.view.dagger.repodagger.presenter.RepoDaggerPresenter
