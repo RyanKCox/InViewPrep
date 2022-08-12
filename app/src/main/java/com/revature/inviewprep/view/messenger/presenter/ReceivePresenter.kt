@@ -24,7 +24,7 @@ class ReceivePresenter(
             .switchMap {
                 if(it.message.isNotEmpty()) {
                     chatRepository.addMessage(it)
-                    Observable.just(MessengerViewState.DisplayMessages(chatRepository.getChat().value?.toList()!!))
+                    Observable.just(MessengerViewState.DisplayMessages(chatRepository.chat.toList()))
                 }
                 else{
                     Observable.just(MessengerViewState.MessageEmpty)
@@ -35,13 +35,13 @@ class ReceivePresenter(
                     RouterTransaction.with(SendController())
                         .pushChangeHandler(FadeChangeHandler())
                         .popChangeHandler(FadeChangeHandler()))
-                router.popController(router.backstack[router.backstackSize-2].controller)
+                router.popController(router.backstack[router.backstackSize-2].controller())
 
             }
             .ofType(MessengerViewState::class.java)
 
         val data = Observable
-            .just(MessengerViewState.DisplayMessages(chatRepository.getChat().value?.toList()!!))
+            .just(MessengerViewState.DisplayMessages(chatRepository.chat.toList()))
             .delay(1,TimeUnit.SECONDS)
             .doOnSubscribe { MessengerViewState.Loading }
             .ofType(MessengerViewState::class.java)

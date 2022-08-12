@@ -2,28 +2,36 @@ package com.revature.inviewprep
 
 import android.app.Application
 import android.content.Context
+import androidx.annotation.NonNull
 import com.bluelinelabs.conductor.Controller
 import com.ivianuu.contributer.conductor.HasControllerInjector
+import com.revature.inviewprep.di.AppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import timber.log.Timber
 import javax.inject.Inject
 
-class InViewClientApp :Application(),HasControllerInjector {
+open class InViewClientApp :Application() {
+
+//    val appComponent:AppComponent by lazy {
+//        DaggerAppComponent.create()
+//    }
     companion object{
-        fun get(context: Context): InViewClientApp{
+        fun get(@NonNull context: Context):InViewClientApp{
             return context.applicationContext as InViewClientApp
         }
     }
 
-    @Inject
-    lateinit var controllerInjector : DispatchingAndroidInjector<Controller>
-
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
-
+        //setupApplicationComponent()
     }
 
-    override fun controllerInjector() = controllerInjector
+    /*private fun setupApplicationComponent() {
+        val appComponent:AppComponent = prepareApplicationComponent().build()
+        appComponent.inject(this)
+    }
+    @NonNull protected fun prepareApplicationComponent():AppComponent.Builder{
+        return DaggerAppComponent.builder().app(this)
+    }*/
 }

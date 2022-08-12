@@ -23,8 +23,7 @@ class GreetingsController :
 
     override fun onCreateView(
         inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
+        container: ViewGroup
     ): View {
         val view = inflater.inflate(R.layout.controller_mosby_hello,container,false)
         greetingsTV = view.findViewById(R.id.greeting_textview)

@@ -26,8 +26,7 @@ class RepoDaggerController :MviController<RepoDaggerView,RepoDaggerPresenter>(),
 
     override fun onCreateView(
         inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
+        container: ViewGroup
     ): View {
         val view = inflater.inflate(R.layout.controller_repodagger,container,false)
         setup(view)

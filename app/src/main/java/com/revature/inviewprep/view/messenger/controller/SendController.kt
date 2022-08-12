@@ -1,22 +1,18 @@
 package com.revature.inviewprep.view.messenger.controller
 
 import android.graphics.Color
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ProgressBar
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bluelinelabs.conductor.ControllerChangeHandler
-import com.bluelinelabs.conductor.ControllerChangeType
-import com.hannesdorfmann.mosby3.MviController
 import com.hannesdorfmann.mosby3.mvp.MvpView
 import com.jakewharton.rxbinding2.view.clicks
 import com.revature.inviewprep.R
 import com.revature.inviewprep.databinding.ControllerMessengerSendBinding
+import com.revature.inviewprep.view.core.MviBaseController
 import com.revature.inviewprep.view.messenger.data.*
 import com.revature.inviewprep.view.messenger.presenter.SendPresenter
 import com.revature.inviewprep.view.messenger.presenter.MessengerViewState
@@ -25,7 +21,7 @@ import com.xwray.groupie.GroupieViewHolder
 import io.reactivex.Observable
 import java.util.*
 
-class SendController : MviController<MessengerView,SendPresenter>(),MessengerView {
+class SendController : MviBaseController<MessengerView,SendPresenter>(),MessengerView {
 
     private val user = User("Ryan")
 
@@ -35,17 +31,12 @@ class SendController : MviController<MessengerView,SendPresenter>(),MessengerVie
     private lateinit var sendMessage:EditText
     private lateinit var progressBar:ProgressBar
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
-    ): View {
+    @LayoutRes
+    override fun getLayoutId() = R.layout.controller_messenger_send
 
-        val view = inflater.inflate(R.layout.controller_messenger_send,container,false)
-
+    override fun onViewBound(view: View) {
+        super.onViewBound(view)
         setup(view)
-
-        return view
     }
     private fun setup(view:View){
         recycler = ControllerMessengerSendBinding.bind(view).recyclerMessengerSend
@@ -54,11 +45,8 @@ class SendController : MviController<MessengerView,SendPresenter>(),MessengerVie
         sendButton = ControllerMessengerSendBinding.bind(view).imageSend
         sendMessage = ControllerMessengerSendBinding.bind(view).textSendmessageSend
         progressBar = ControllerMessengerSendBinding.bind(view).progressBarMessengerSend
-
     }
 
-
-    override fun createPresenter() =  SendPresenter(router, ChatRepository)
     override fun sendMessageIntent(): Observable<Message> = sendButton.clicks().map {
 
         val message = Message(user, Calendar.getInstance().timeInMillis, sendMessage.text.toString())
@@ -110,6 +98,7 @@ class SendController : MviController<MessengerView,SendPresenter>(),MessengerVie
         sendMessage.setHintTextColor(Color.RED)
 
     }
+
 
 }
 

@@ -4,11 +4,18 @@ import androidx.lifecycle.MutableLiveData
 import javax.inject.Inject
 import javax.inject.Singleton
 
-object ChatRepository {
-    private val chat = MutableLiveData<MutableList<Message>>(mutableListOf())
+@Singleton
+class ChatDataRepository @Inject constructor() :ChatRepository {
+    override val chat = mutableListOf<Message>()
 
-    fun getChat() = chat
-    fun addMessage(msg:Message){
-        chat.value?.add(msg)
+    override fun addMessage(msg: Message) {
+        chat.add(msg)
     }
+}
+
+@Singleton
+interface ChatRepository{
+    val chat:MutableList<Message>
+//    fun getChat()
+    fun addMessage(msg:Message)
 }

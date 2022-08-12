@@ -11,6 +11,7 @@ import com.revature.inviewprep.view.home.controller.HomeController
 class MainActivity : AppCompatActivity() {
 
     private lateinit var router: Router
+//    val app = InViewClientApp()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

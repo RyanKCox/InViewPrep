@@ -34,8 +34,7 @@ class HomeController: MviController<HomeView,HomePresenter>(),HomeView{
 
     override fun onCreateView(
         inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
+        container: ViewGroup
     ): View {
         val view = inflater.inflate(R.layout.controller_home,container,false)
         setupUI(view)

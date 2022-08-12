@@ -11,24 +11,27 @@ import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hannesdorfmann.mosby3.MviController
+import com.ivianuu.contributer.conductor.ConductorInjection
 import com.jakewharton.rxbinding2.view.clicks
+import com.revature.inviewprep.InViewClientApp
+import com.revature.inviewprep.MainActivity
 import com.revature.inviewprep.R
 import com.revature.inviewprep.databinding.ControllerMessengerReceiveBinding
-import com.revature.inviewprep.view.messenger.data.ChatRepository
-import com.revature.inviewprep.view.messenger.data.Message
-import com.revature.inviewprep.view.messenger.data.MessengerReceiveItem
-import com.revature.inviewprep.view.messenger.data.MessengerSendItem
-import com.revature.inviewprep.view.messenger.data.User
+import com.revature.inviewprep.view.messenger.data.*
+import com.revature.inviewprep.view.messenger.di.MessengerRouterModule
 import com.revature.inviewprep.view.messenger.presenter.MessengerViewState
 import com.revature.inviewprep.view.messenger.presenter.ReceivePresenter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import io.reactivex.Observable
 import java.util.*
+import javax.inject.Inject
 
 class ReceiveController :MviController<MessengerView,ReceivePresenter>(),MessengerView{
 
     private val user = User("James")
+    @Inject
+    lateinit var chatRepository: ChatRepository
 
     private lateinit var sendButton:ImageButton
     private lateinit var sendMessage:EditText
@@ -39,8 +42,7 @@ class ReceiveController :MviController<MessengerView,ReceivePresenter>(),Messeng
 
     override fun onCreateView(
         inflater: LayoutInflater,
-        container: ViewGroup,
-        savedViewState: Bundle?
+        container: ViewGroup
     ): View {
         val view = inflater.inflate(R.layout.controller_messenger_receive,container,false)
 
@@ -58,9 +60,20 @@ class ReceiveController :MviController<MessengerView,ReceivePresenter>(),Messeng
 
         recycler.layoutManager = LinearLayoutManager(view.context)
         recycler.adapter = adapter
+
+//        chatRepository = ChatDataRepository()
+        ConductorInjection.inject(this)
+//        (view.context as MainActivity).app.appComponent.inject(this)
+//        (view.context.applicationContext as InViewClientApp).appComponent.inject(this)
+//        DaggerMessengerComponent.builder()
+//            .messengerRouterModule(MessengerRouterModule((router)))
+//            .build()
+//            .inject(this)
+
+//        DaggerMessengerComponent.builder().build().inject(this)
     }
 
-    override fun createPresenter() = ReceivePresenter(router, ChatRepository)
+    override fun createPresenter() = ReceivePresenter(router, chatRepository)
 
     override fun sendMessageIntent(): Observable<Message> = sendButton.clicks().map {
 
