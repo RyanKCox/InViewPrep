@@ -39,7 +39,6 @@ dependencies {
     def mosbyVersion = "3.1.0"
     def rxBinding = "2.1.1"
     def daggerVersion = "2.40"
-    def conductor = "2.1.5"
 
 
     implementation 'androidx.core:core-ktx:1.8.0'
@@ -51,9 +50,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //Conductor
-    implementation "com.bluelinelabs:conductor:$conductor"
-    implementation("com.bluelinelabs:conductor-support:$conductor")
-    implementation("com.bluelinelabs:conductor-rxlifecycle2:$conductor")
+    implementation 'com.bluelinelabs:conductor:3.1.7'
+    implementation('com.bluelinelabs:conductor-support:2.1.5')
+    implementation('com.bluelinelabs:conductor-rxlifecycle2:2.1.5')
 
     //Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.1"
